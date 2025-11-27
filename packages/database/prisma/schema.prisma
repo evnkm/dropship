@@ -16,7 +16,7 @@ generator zod {
 }
 
 model User {
-  id                 String       @id @default(cuid())
+  id                 String         @id @default(cuid())
   name               String
   email              String
   emailVerified      Boolean
@@ -28,7 +28,7 @@ model User {
   banned             Boolean?
   banReason          String?
   banExpires         DateTime?
-  onboardingComplete Boolean      @default(false)
+  onboardingComplete Boolean        @default(false)
   paymentsCustomerId String?
   locale             String?
   displayUsername    String?
@@ -41,6 +41,8 @@ model User {
   members            Member[]
   twofactors         TwoFactor[]
   aiChats            AiChat[]
+  savedProducts      SavedProduct[]
+  productAlerts      ProductAlert[]
 
   @@unique([email])
   @@unique([username])
@@ -207,5 +209,131 @@ model AiChat {
   updatedAt      DateTime      @updatedAt
 
   @@map("ai_chat")
+}
+
+// DropShip Autopilot Models
+
+enum ProductSource {
+  ALIEXPRESS
+  TIKTOK_SHOP
+  AMAZON_MOVERS
+  CJ_DROPSHIPPING
+  TEMU
+  GOOGLE_TRENDS
+}
+
+enum AdCreativeType {
+  STATIC_IMAGE
+  CAROUSEL
+  VIDEO_SCRIPT
+  UGC_STYLE
+}
+
+enum AdPlatform {
+  FACEBOOK
+  INSTAGRAM
+  TIKTOK
+  GOOGLE
+}
+
+model Product {
+  id                   String         @id @default(cuid())
+  externalId           String
+  source               ProductSource
+  name                 String
+  description          String?
+  imageUrls            String[]
+  sourceUrl            String
+  supplierUrl          String?
+  costPrice            Decimal        @db.Decimal(10, 2)
+  suggestedRetailPrice Decimal        @db.Decimal(10, 2)
+  category             String
+  subcategory          String?
+  tags                 String[]
+  shippingWeight       Decimal?       @db.Decimal(6, 2)
+  shippingTime         String?
+  supplierRating       Decimal?       @db.Decimal(3, 2)
+  supplierOrderCount   Int?
+  trendScore           Int            @default(0)
+  competitionScore     Int            @default(0)
+  marginScore          Int            @default(0)
+  overallScore         Int            @default(0)
+  trendData            Json?
+  firstSeenAt          DateTime       @default(now())
+  lastUpdatedAt        DateTime       @updatedAt
+  isActive             Boolean        @default(true)
+  adCreatives          AdCreative[]
+  scores               ProductScore[]
+  savedBy              SavedProduct[]
+
+  @@unique([externalId, source])
+  @@index([overallScore])
+  @@index([category])
+  @@index([firstSeenAt])
+  @@map("product")
+}
+
+model ProductScore {
+  id                 String   @id @default(cuid())
+  productId          String
+  product            Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  trendScore         Int
+  competitionScore   Int
+  marginScore        Int
+  overallScore       Int
+  googleTrendsValue  Int?
+  socialMentions     Int?
+  adLibraryCount     Int?
+  competitorStoreCount Int?
+  recordedAt         DateTime @default(now())
+
+  @@index([productId, recordedAt])
+  @@map("product_score")
+}
+
+model AdCreative {
+  id             String         @id @default(cuid())
+  productId      String
+  product        Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  type           AdCreativeType
+  platform       AdPlatform
+  headline       String?
+  primaryText    String?
+  description    String?
+  callToAction   String?
+  imageUrl       String?
+  videoScriptUrl String?
+  thumbnailUrl   String?
+  generatedAt    DateTime       @default(now())
+
+  @@index([productId])
+  @@map("ad_creative")
+}
+
+model SavedProduct {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  savedAt   DateTime @default(now())
+  notes     String?
+
+  @@unique([userId, productId])
+  @@index([userId])
+  @@map("saved_product")
+}
+
+model ProductAlert {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  alertType String
+  sentAt    DateTime @default(now())
+  read      Boolean  @default(false)
+
+  @@index([userId])
+  @@map("product_alert")
 }
 

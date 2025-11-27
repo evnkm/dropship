@@ -6,10 +6,12 @@ import { UserMenu } from "@saas/shared/components/UserMenu";
 import { Logo } from "@shared/components/Logo";
 import { cn } from "@ui/lib";
 import {
-	BotMessageSquareIcon,
+	BookmarkIcon,
 	ChevronRightIcon,
-	HomeIcon,
+	LayoutDashboardIcon,
+	PackageIcon,
 	SettingsIcon,
+	TrendingUpIcon,
 	UserCog2Icon,
 	UserCogIcon,
 } from "lucide-react";
@@ -32,18 +34,28 @@ export function NavBar() {
 
 	const menuItems = [
 		{
-			label: t("app.menu.start"),
-			href: basePath,
-			icon: HomeIcon,
-			isActive: pathname === basePath,
+			label: "Dashboard",
+			href: "/app/dashboard",
+			icon: LayoutDashboardIcon,
+			isActive: pathname === "/app/dashboard",
 		},
 		{
-			label: t("app.menu.aiChatbot"),
-			href: activeOrganization
-				? `/app/${activeOrganization.slug}/chatbot`
-				: "/app/chatbot",
-			icon: BotMessageSquareIcon,
-			isActive: pathname.includes("/chatbot"),
+			label: "Products",
+			href: "/app/products",
+			icon: PackageIcon,
+			isActive: pathname.startsWith("/app/products"),
+		},
+		{
+			label: "Saved",
+			href: "/app/saved",
+			icon: BookmarkIcon,
+			isActive: pathname === "/app/saved",
+		},
+		{
+			label: "Trends",
+			href: "/app/trends",
+			icon: TrendingUpIcon,
+			isActive: pathname === "/app/trends",
 		},
 		...(activeOrganization && isOrganizationAdmin
 			? [

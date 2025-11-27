@@ -15,21 +15,20 @@ export function Hero() {
 					<div className="mx-auto flex flex-wrap items-center justify-center rounded-full border border-highlight/30 p-px px-4 py-1 font-normal text-highlight text-sm">
 						<span className="flex items-center gap-2 rounded-full font-semibold text-highlight">
 							<span className="size-2 rounded-full bg-highlight" />
-							New:
+							AI-Powered:
 						</span>
 						<span className="ml-1 block font-medium text-foreground">
-							Amazing feature of your SaaS
+							Automated product discovery & ad generation
 						</span>
 					</div>
 				</div>
 
 				<h1 className="mx-auto max-w-3xl text-balance font-bold text-5xl lg:text-7xl">
-					Your revolutionary Next.js SaaS
+					Find Winning Products on Autopilot
 				</h1>
 
 				<p className="mx-auto mt-4 max-w-lg text-balance text-foreground/60 text-lg">
-					This is a demo application built with supastarter. It will
-					save you a lot of time and effort building your next SaaS.
+					DropShip Autopilot discovers trending products, scores them for profitability, and generates ready-to-use ad creatives. Start selling faster.
 				</p>
 
 				<div className="mt-6 flex flex-col items-center justify-center gap-3 md:flex-row">

@@ -1,13 +1,13 @@
 "use client";
 
-import { MobileIcon } from "@radix-ui/react-icons";
 import { cn } from "@ui/lib";
 import {
-	CloudIcon,
-	ComputerIcon,
-	PaperclipIcon,
-	StarIcon,
-	WandIcon,
+	BarChart3Icon,
+	ImageIcon,
+	SearchIcon,
+	SparklesIcon,
+	TrendingUpIcon,
+	ZapIcon,
 } from "lucide-react";
 import Image, { type StaticImageData } from "next/image";
 import { type JSXElementConstructor, type ReactNode, useState } from "react";
@@ -16,7 +16,7 @@ import heroImage from "../../../../public/images/hero.svg";
 export const featureTabs: Array<{
 	id: string;
 	title: string;
-	icon: JSXElementConstructor<any>;
+	icon: JSXElementConstructor<{ className?: string }>;
 	subtitle?: string;
 	description?: ReactNode;
 	image?: StaticImageData;
@@ -24,105 +24,106 @@ export const featureTabs: Array<{
 	stack?: {
 		title: string;
 		href: string;
-		icon: JSXElementConstructor<any>;
+		icon: JSXElementConstructor<{ className?: string }>;
 	}[];
 	highlights?: {
 		title: string;
 		description: string;
-		icon: JSXElementConstructor<any>;
+		icon: JSXElementConstructor<{ className?: string; width?: string; height?: string }>;
 		demoLink?: string;
 		docsLink?: string;
 	}[];
 }> = [
 	{
-		id: "feature1",
-		title: "Feature 1",
-		icon: StarIcon,
-		subtitle: "Do more with our amazing SaaS.",
+		id: "discovery",
+		title: "Product Discovery",
+		icon: SearchIcon,
+		subtitle: "Find winning products automatically.",
 		description:
-			"This is a brilliant feature. And below you can see some reasons why. This is basically just a dummy text.",
+			"Our AI-powered scrapers continuously monitor TikTok Shop, AliExpress, Amazon Movers, and more to discover trending products before they go mainstream.",
 		stack: [],
 		image: heroImage,
 		imageBorder: false,
 		highlights: [
 			{
-				title: "Benefit 1",
+				title: "Multi-Source Scraping",
 				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: WandIcon,
+					"Aggregate products from TikTok Shop, AliExpress, Amazon Movers, CJ Dropshipping, and Google Trends in one place.",
+				icon: SearchIcon,
 			},
 			{
-				title: "Benefit 2",
+				title: "Real-Time Updates",
 				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: ComputerIcon,
+					"Products are refreshed every 6 hours so you always have access to the latest trending items.",
+				icon: ZapIcon,
 			},
 			{
-				title: "Benefit 3",
+				title: "Smart Filtering",
 				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: MobileIcon,
+					"Filter by category, score, price range, and more to find exactly what you're looking for.",
+				icon: BarChart3Icon,
 			},
 		],
 	},
 	{
-		id: "feature2",
-		title: "Feature 2",
-		icon: CloudIcon,
-		subtitle: "Your SaaS can also do this.",
-		description: "Another dummy text for another feature.",
+		id: "scoring",
+		title: "Product Scoring",
+		icon: TrendingUpIcon,
+		subtitle: "Know which products will sell.",
+		description:
+			"Every product is scored on four key metrics: Trend Score, Competition Score, Margin Score, and Overall Score. Make data-driven decisions, not guesses.",
 		stack: [],
 		image: heroImage,
 		imageBorder: false,
 		highlights: [
 			{
-				title: "Benefit 1",
+				title: "Trend Score",
 				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: WandIcon,
+					"Measures Google Trends growth, sales velocity, and social momentum to identify products on the rise.",
+				icon: TrendingUpIcon,
 			},
 			{
-				title: "Benefit 2",
+				title: "Competition Score",
 				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: ComputerIcon,
+					"Analyzes ad library saturation, Shopify store count, and Amazon sellers to find low-competition opportunities.",
+				icon: BarChart3Icon,
 			},
 			{
-				title: "Benefit 3",
+				title: "Margin Score",
 				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: MobileIcon,
+					"Calculates gross margin potential based on cost price, suggested retail, and estimated shipping.",
+				icon: SparklesIcon,
 			},
 		],
 	},
 	{
-		id: "feature3",
-		title: "Feature 3",
-		icon: PaperclipIcon,
-		subtitle: "We even got a third one.",
+		id: "creatives",
+		title: "Ad Creatives",
+		icon: ImageIcon,
+		subtitle: "Launch ads in minutes, not hours.",
 		description:
-			"Of course your SaaS will have more features than this, but this is just a dummy text.",
+			"Generate professional ad copy, lifestyle images, and video scripts for every product. Ready to use on Facebook, Instagram, and TikTok.",
 		stack: [],
 		image: heroImage,
 		imageBorder: false,
 		highlights: [
 			{
-				title: "Benefit 1",
+				title: "Ad Copy Variations",
 				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: WandIcon,
+					"Get multiple headline, primary text, and description variations using AIDA, PAS, and feature-benefit frameworks.",
+				icon: SparklesIcon,
 			},
 			{
-				title: "Benefit 2",
+				title: "Video Scripts",
 				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: ComputerIcon,
+					"UGC-style testimonials, problem-solution scripts, and product showcases ready for TikTok and Reels.",
+				icon: ImageIcon,
 			},
 			{
-				title: "Benefit 3",
+				title: "One-Click Copy",
 				description:
-					"This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text.",
-				icon: MobileIcon,
+					"Copy any creative element with a single click. No more manual typing or formatting.",
+				icon: ZapIcon,
 			},
 		],
 	},
@@ -135,12 +136,10 @@ export function Features() {
 			<div className="container max-w-5xl">
 				<div className="mx-auto mb-6 lg:mb-0 lg:max-w-5xl lg:text-center">
 					<h2 className="font-bold text-4xl lg:text-5xl">
-						Features your clients will love
+						Everything you need to find winning products
 					</h2>
 					<p className="mt-6 text-balance text-lg opacity-50">
-						In this section you can showcase all the features of
-						your SaaS provides and how they can benefit your
-						clients.
+						From automated product discovery to AI-generated ad creatives, DropShip Autopilot gives you the tools to scale your dropshipping business.
 					</p>
 				</div>
 
